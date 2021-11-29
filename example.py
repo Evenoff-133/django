@@ -1,7 +1,6 @@
 from time import time
 
 def timelog(func):
-    @timelog
     def wrapper(*args, **kwargs):
         t1 = time()
         result = func(*args, **kwargs)
@@ -54,8 +53,10 @@ class Book(Product, Form):
     def __str__(self):
         return f'BOOk: {self.author}: "{self.name}"'
 
+    @timelog
     def get_pages_count(self):
         print(f'pages count in this book: {self.pages}')
+
     @timelog
     def add_to_cart(self, count):
         super().add_to_cart(count)
