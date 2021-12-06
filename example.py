@@ -62,3 +62,5 @@ class Book(Product, Form):
         super().add_to_cart(count)
         print(f"{count} products [{self.product}] added to cart")
 
+
+"""Проверка push"""
