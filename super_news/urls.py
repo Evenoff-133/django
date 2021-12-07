@@ -15,15 +15,32 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+import debug_toolbar
 
 from django.conf import settings
 from django.conf.urls.static import static
 
-from polls.views import index, detail, blog_heandler
+from polls.views import index, detail
+from news import views
 
 urlpatterns = [
     path('', index ),
     path('polls/<int:question_id>/', detail),
-    path('blog/', blog_heandler),
+
+    path('blog/', views.blog_heandler),
+    path('page/', views.page_heandler),
+    path('about/', views.about_heandler),
+    path('contact/', views.contact_heandler),
+    path('index/', views.index_heandler),
+    path('search/', views.search_heandler),
+
+    path('robots.txt', views.robots_heandler),
+
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+if settings.DEBUG:
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

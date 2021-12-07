@@ -17,6 +17,6 @@ def detail(request, question_id):
 
 def blog_heandler(request):
     context = {}
-    return render(request, 'news/blog-single.html', context)
+    return render(request, 'news/blog.html', context)
 
 
