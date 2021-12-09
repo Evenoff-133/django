@@ -27,20 +27,21 @@ urlpatterns = [
     path('', index ),
     path('polls/<int:question_id>/', detail),
 
-    path('blog/', views.blog_heandler),
-    path('page/', views.page_heandler),
-    path('about/', views.about_heandler),
-    path('contact/', views.contact_heandler),
-    path('index/', views.index_heandler),
-    path('search/', views.search_heandler),
+    path('blog/', views.blog_handler),
+    path('page/', views.page_handler),
+    path('about/', views.about_handler),
+    path('contact/', views.contact_handler),
+    path('index/', views.index_handler),
+    path('search/', views.search_handler),
 
-    path('robots.txt', views.robots_heandler),
+    path('robots.txt', views.robots_handler),
+
+    path('summernote/', include('django_summernote.urls')),
 
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 if settings.DEBUG:
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    urlpatterns += [ path('__debug__/', include(debug_toolbar.urls))]
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
