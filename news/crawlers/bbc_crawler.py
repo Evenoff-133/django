@@ -38,7 +38,6 @@ def crawl_one(url):
             f.write(response.content)
 
     pub_date = datetime.strptime(pub_date[0][0:10], '%Y-%m-%d')
-    breakpoint()
     categories = []
 
     for cat in cats:

@@ -6,4 +6,4 @@ class Command(BaseCommand):
     help = 'Run BBC News Crawler'
 
     def handle(self, *args, **options):
-        crawl_one()
+        run()
