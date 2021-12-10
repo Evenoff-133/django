@@ -6,8 +6,7 @@ from news.models import Article, Author, Category
 
 
 # BBC Author in DB = 3
-def get_authors(a_id=3):
-    return Author.objects.get(id=a_id)
+author = Author.objects.get(id=3)
 
 
 def crawl_one(url):
@@ -55,7 +54,7 @@ def crawl_one(url):
         'shot_description': shot_description.strip(),
         'image': img_path,
         'pub_date': pub_date,
-        'author': Author,
+        'author': author,
     }
 
     article, created = Article.objects.get_or_create(**article)
