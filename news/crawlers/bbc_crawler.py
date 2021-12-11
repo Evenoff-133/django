@@ -1,12 +1,14 @@
 from datetime import datetime
 from slugify import slugify
 from requests_html import HTMLSession
+from django.utils.timezone import make_aware
 from concurrent.futures import ThreadPoolExecutor
 from news.models import Article, Author, Category
 
 
 # BBC Author in DB = 3
 author = Author.objects.get(id=3)
+# articles = []
 
 
 def crawl_one(url):
@@ -17,15 +19,15 @@ def crawl_one(url):
     content = response.html.xpath('//article//p')
     image_url = response.html.xpath('//figure//img/@src')[0]
     pub_date = response.html.xpath('//time/@datetime')
-    cats= response.html.xpath('//*[@id="main-content"]/div[5]/div/div[1]/article/section[1]/div/div[2]/ul/li')
+    cats = response.html.xpath('//*[@id="main-content"]/div[5]/div/div[1]/article/section[1]/div/div[2]/ul/li')
 
     my_content = ''
-    shot_description = ''
+    short_description = ''
 
     for element in content:
         my_content += f'<{element.tag}>' + element.text + f'<{element.tag}>'
-        if len(shot_description) < 200:
-            shot_description += element.text + ' '
+        if len(short_description) < 200:
+            short_description += element.text + ' '
 
     image_name = slugify(name)
     img_type = image_url.split('.')[-1]
@@ -51,11 +53,14 @@ def crawl_one(url):
         'name': name,
         'slug': slugify(name),
         'content': my_content,
-        'shot_description': shot_description.strip(),
-        'image': img_path,
-        'pub_date': pub_date,
+        'short_description': short_description.strip(),
+        'main_image': image_url,
+        'pub_date': make_aware(pub_date),
         'author': author,
     }
+
+    # article = Article(**article)
+    # articles.Append(article)
 
     article, created = Article.objects.get_or_create(**article)
 
@@ -86,6 +91,13 @@ def get_fresh_news():
 
 
 def run():
+    # Article.objects.all().delete()
     fresh_news = get_fresh_news()
-    with ThreadPoolExecutor(max_workers=10) as executor:
+    with ThreadPoolExecutor(max_workers=5) as executor:
         executor.map(crawl_one, fresh_news)
+
+    # Article.objects.bulk_create(articles, ignore_conflicts=True)
+
+
+if __name__ == '__main__':
+    run()
