@@ -1,4 +1,14 @@
 from django.shortcuts import render
+from .models import Article
+
+
+def index_handler(request):
+    last_articles = Article.objects.all().order_by('-pub_date')[:3]
+    breakpoint()
+    context = {
+        'last_articles': last_articles
+    }
+    return render(request, 'news/index.html', context)
 
 
 def blog_handler(request):
@@ -19,11 +29,6 @@ def contact_handler(request):
 def about_handler(request):
     context = {}
     return render(request, 'news/about.html', context)
-
-
-def index_handler(request):
-    context = {}
-    return render(request, 'news/index.html', context)
 
 
 def search_handler(request):
