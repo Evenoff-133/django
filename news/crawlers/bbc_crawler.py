@@ -56,7 +56,7 @@ def crawl_one(url):
             'slug': slugify(name),
             'content': my_content,
             'short_description': short_description.strip(),
-            'main_image': image_url,
+            'main_image': img_path,
             'pub_date': make_aware(pub_date),
             'author': author,
         }
