@@ -1,22 +1,35 @@
 from django.shortcuts import render
-from .models import Article
+from .models import Article, Category
+from django.db.models import Count
 
 
 def index_handler(request):
-    last_articles = Article.objects.all().order_by('-pub_date')[:3]
-    breakpoint()
+    last_articles = Article.objects.all().order_by(
+        '-pub_date')[:3].prefetch_related('categories')
+    menu_categories = Category.objects.annotate(
+        count=Count('article__id')).order_by('count')[:5]
+
     context = {
-        'last_articles': last_articles
+        'last_articles': last_articles,
+        'menu_categories': menu_categories,
     }
     return render(request, 'news/index.html', context)
 
 
 def blog_handler(request):
+    last_articles = Article.objects.all().order_by(
+        '-pub_date')[:10].prefetch_related('categories')
+    context = {'last_articles': last_articles
+    }
+    return render(request, 'news/blog.html', context)
+
+
+def category_handler(request, cat_slug):
     context = {}
     return render(request, 'news/blog.html', context)
 
 
-def page_handler(request):
+def page_handler(request, post_slug):
     context = {}
     return render(request, 'news/page.html', context)
 

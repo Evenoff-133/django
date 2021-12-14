@@ -20,7 +20,9 @@
                                             <li><a class="active" href="{% url 'blog' %}">
                                                 Blog <i class="ti-angle-down"></i></a>
                                                 <ul class="submenu">
-                                                    <li><a href="{% url 'article' %}">single-blog</a></li>
+                                                    {% for cat in menu_categories %}
+                                                    <li><a href="{% url 'category' cat.slug %}">{{ cat.name }}</a></li>
+                                                    {% endfor %}
                                                 </ul>
                                             </li>
                                             <li><a href="{% url 'about' %}">About</a></li>

@@ -13,9 +13,10 @@ from news import views
 
 urlpatterns = [
     path('', views.index_handler, name='homepage'),
-
     path('blog/', views.blog_handler, name='blog'),
-    path('page/', views.page_handler, name='article'),
+    path('<cat_slug>', views.blog_handler, name='category'),
+    path('post/<post_slug>', views.page_handler, name='article'),
+
     path('about/', views.about_handler, name='about'),
     path('contact/', views.contact_handler, name='contact'),
     path('search/', views.search_handler, name='search'),
@@ -23,8 +24,8 @@ urlpatterns = [
     path('robots.txt', views.robots_handler),
 
     path('summernote/', include('django_summernote.urls')),
-
     path('admin/', admin.site.urls),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
