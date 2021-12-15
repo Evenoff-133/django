@@ -19,8 +19,7 @@ def index_handler(request):
 def blog_handler(request):
     last_articles = Article.objects.all().order_by(
         '-pub_date')[:10].prefetch_related('categories')
-    context = {'last_articles': last_articles
-    }
+    context = {'last_articles': last_articles}
     return render(request, 'news/blog.html', context)
 
 
