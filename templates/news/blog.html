@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="blog_details">
-                                <a class="d-inline-block" href="page.html">
+                                <a class="d-inline-block" href="{% url 'article' article.slug %}">
                                     <h2>{{ article.name }}</h2>
                                 </a>
 
@@ -41,9 +41,9 @@
                                     <li><i class="fa fa-user"></i>
                                         {% for cat in article.categories.all %}
                                         <a href="{% url 'category' article.categories.first.slug %}">
-                                            {{ article.categories.first.name }}</a>
+                                            {{ article.categories.first.name | title }}</a>
                                     </li>
-                                            {% endfor %}
+                                        {% endfor %}
 
                                     <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
                                 </ul>

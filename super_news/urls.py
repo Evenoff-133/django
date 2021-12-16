@@ -15,7 +15,7 @@ urlpatterns = [
     path('', views.index_handler, name='homepage'),
 
     path('blog/', views.blog_handler, name='blog'),
-    path('category/<cat_slug>', views.category_handler, name='category'),
+    path('category/<cat_slug>', views.blog_handler, name='category'),
     path('post/<post_slug>', views.page_handler, name='article'),
 
     path('about/', views.about_handler, name='about'),

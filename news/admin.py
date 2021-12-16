@@ -26,6 +26,10 @@ def get_fresh_news(modeladmin, request, queryset):
 get_fresh_news.short_description = "Get fresh articles"
 
 
+class CommentArticleInline(admin.TabularInline):
+    model = Comment
+
+
 class ArticleAdmin(SummernoteModelAdmin):
     summernote_fields = ('content', 'short_description')
     list_display = ('name', 'image_code', 'pub_date', 'author', 'content_words_count',
@@ -34,6 +38,8 @@ class ArticleAdmin(SummernoteModelAdmin):
     list_filter = ('author', 'pub_date', 'categories')
     search_fields = ('name', 'author__name')
     actions = (count_words, )
+    inlines = (CommentArticleInline, )
+
 
     def image_code(self, object):
         return format_html(
