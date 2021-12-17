@@ -31,6 +31,8 @@ def blog_handler(request, **kwargs):
 
 
 def page_handler(request, post_slug):
+    last_articles = Article.objects.all().order_by(
+        '-pub_date')[:5].prefetch_related('categories')
     main_article = Article.objects.get(slug=post_slug)
     try:
         prev_article = Article.objects.get(id=main_article.id-1)
@@ -42,7 +44,8 @@ def page_handler(request, post_slug):
         next_article = None
     context = {'article': main_article,
                'prev_article': prev_article,
-               'next_article': next_article
+               'next_article': next_article,
+               'last_articles': last_articles,
     }
     return render(request, 'news/page.html', context)
 
