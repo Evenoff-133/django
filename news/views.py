@@ -16,7 +16,7 @@ def index_handler(request):
 def blog_handler(request, **kwargs):
     cat_slug = kwargs.get('cat_slug')
     if cat_slug:
-        category = Category.objects.get(slug=cat_slug).prefetch_related('categories')
+        category = Category.objects.get(slug=cat_slug)
         last_articles = Article.objects.filter(categories__slug=cat_slug).order_by(
             '-pub_date')[:10].prefetch_related('categories')
     else:
@@ -39,7 +39,7 @@ def page_handler(request, post_slug):
     try:
         next_article = Article.objects.get(id=main_article.id+1)
     except ObjectDoesNotExist:
-        prev_article = None
+        next_article = None
     context = {'article': main_article,
                'prev_article': prev_article,
                'next_article': next_article

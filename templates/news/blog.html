@@ -34,16 +34,16 @@
                                     <h2>{{ article.name }}</h2>
                                 </a>
 
-                                <p>{{ article.short_description }} </p>
+                                <p>{{ article.short_description | truncatewords:10 }} </p>
 
                                 <ul class="blog-info-link">
 
                                     <li><i class="fa fa-user"></i>
                                         {% for cat in article.categories.all %}
                                         <a href="{% url 'category' article.categories.first.slug %}">
-                                            {{ article.categories.first.name | title }}</a>
-                                    </li>
+                                            {{ cat.name | title }},</a>
                                         {% endfor %}
+                                    </li>
 
                                     <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
                                 </ul>
