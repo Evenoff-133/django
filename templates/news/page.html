@@ -121,7 +121,13 @@
                </div>
                <div class="comment-form">
                   <h4>Leave a Reply</h4>
-                  <form class="form-contact comment_form" action="#" id="commentForm">
+                   {% if masseges %}
+                       {% for message in messages %}
+                           <p style="text-color: #721c24;">{{ message }}</p>
+                       {% endfor %}
+                   {% endif %}
+                  <form class="form-contact comment_form" action="" method="post" id="commentForm">
+                      {% csrf_token %}
                      <div class="row">
                         <div class="col-12">
                            <div class="form-group">
@@ -131,12 +137,12 @@
                         </div>
                         <div class="col-sm-6">
                            <div class="form-group">
-                              <input class="form-control" name="name" id="name" type="text" placeholder="Name">
+                              <input class="form-control" name="name" id="name" required type="text" placeholder="Name">
                            </div>
                         </div>
                         <div class="col-sm-6">
                            <div class="form-group">
-                              <input class="form-control" name="email" id="email" type="email" placeholder="Email">
+                              <input class="form-control" name="email" id="email" type="email" required placeholder="Email">
                            </div>
                         </div>
                         <div class="col-12">
