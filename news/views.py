@@ -43,17 +43,8 @@ def blog_handler(request, **kwargs):
 
 def page_handler(request, post_slug):
     main_article = Article.objects.get(slug=post_slug)
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            data = form.changed_data
-            data['article'] = main_article
-            Comment.objects.create(**data)
-        else:
-            messages.add_message(request, messages.INFO, 'Error in FORM fields')
-
     last_articles = Article.objects.all().order_by('-pub_date')[:4].prefetch_related('categories')
+
     try:
         prev_article = Article.objects.get(id=main_article.id-1)
     except ObjectDoesNotExist:
@@ -62,11 +53,26 @@ def page_handler(request, post_slug):
         next_article = Article.objects.get(id=main_article.id+1)
     except ObjectDoesNotExist:
         next_article = None
+
     context = {'article': main_article,
                'prev_article': prev_article,
                'next_article': next_article,
                'last_articles': last_articles,
-                }
+    }
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            data['article'] = main_article
+            Comment.objects.create(**data)
+            form = CommentForm()
+        else:
+            messages.add_message(request, messages.INFO, 'Error in FORM fields')
+    else:
+        form = CommentForm()
+    context['form'] = form
+
     return render(request, 'news/page.html', context)
 
 
