@@ -208,7 +208,7 @@
                   </aside>
                   <aside class="single_sidebar_widget popular_post_widget">
                      <h3 class="widget_title">Recent Post</h3>
-                     {% for article in last_articles %}
+                      {% for article in recent_post %}
                       <div class="media post_item">
                           <div class="media-body">
                            <a href="{% url 'article' article.slug %}">

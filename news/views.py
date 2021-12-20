@@ -62,6 +62,8 @@ class PageDetailView(FormMixin, DetailView):
             next_article = None
         context['prev_article'] = prev_article
         context['next_article'] = next_article
+        context['recent_post'] = Article.objects.all().order_by(
+            '-pub_date')[:3].prefetch_related('categories')
         context['comments'] = self.object.comments.filter(is_moderated=True)
         # 'last_articles': last_articles
         return context
@@ -78,10 +80,10 @@ class PageDetailView(FormMixin, DetailView):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-            data = form.cleaned_data
-            data['article'] = self.object
-            Comment.objects.create(**data)
-            return super().form_valid(form)
+        data = form.cleaned_data
+        data['article'] = self.object
+        Comment.objects.create(**data)
+        return super().form_valid(form)
 
 
 class ContactView(TemplateView):
