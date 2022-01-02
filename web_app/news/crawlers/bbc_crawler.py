@@ -15,7 +15,7 @@ def crawl_one(url):
 
     if not AUTHOR:
         # BBC Author in DB = 3
-        AUTHOR = Author.objects.get(id=3)
+        AUTHOR, created = Author.objects.get_or_create(name='bot_author')
     try:
         with HTMLSession() as session:
             response = session.get(url)
@@ -39,7 +39,7 @@ def crawl_one(url):
         img_path = f'images/{image_name}.{img_type}'
 
         with open(f'media/{img_path}', 'wb') as f:
-         with HTMLSession() as session:
+            with HTMLSession() as session:
                 response = session.get(image_url)
                 f.write(response.content)
 
@@ -98,7 +98,7 @@ def get_fresh_news():
 
 
 def run():
-    # Article.objects.all().delete()
+    Article.objects.all().delete()
     fresh_news = get_fresh_news()
     with ThreadPoolExecutor(max_workers=5) as executor:
         executor.map(crawl_one, fresh_news)

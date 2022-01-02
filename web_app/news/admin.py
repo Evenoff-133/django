@@ -19,7 +19,7 @@ count_words.short_description = "Count words in article"
 
 def get_fresh_news(modeladmin, request, queryset):
     for object in queryset:
-        if object.name == 'BBC News':
+        if object.name == 'BBC':
             Thread(target=bbc_crawler.run, args=()).start()
 
 
@@ -69,14 +69,14 @@ class AuthorArticleInline(admin.TabularInline):
 
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'ava')
+    list_display = ('name', 'avatar')
     search_fields = ('name',)
     inlines = (AuthorArticleInline, )
     actions = (get_fresh_news, )
 
     def ava(self, object):
         return format_html(
-            '<img src="{}" style="max-width: 70px" />',
+            '<img src="{}" style="max-width:80px" />',
             object.avatar.url
         )
 
