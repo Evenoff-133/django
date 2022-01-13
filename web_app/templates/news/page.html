@@ -92,7 +92,8 @@
                </div>
                <div class="blog-author">
                   <div class="media align-items-center">
-                     <img src="{{ article.author.avatar.url }}" alt="{{ article.author.name | title}}">
+                     <img src="{% if article.author.avatar %} {{ article.author.avatar.url }} {% endif %}"
+                          alt="{{ article.author.name | title}}">
                      <div class="media-body"> <a href="#">
                            <h4>{{ article.author.name | title}}</h4> </a>
                         <p>{{ article.author.bio }}</p>
