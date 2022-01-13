@@ -8,6 +8,7 @@ services:
      - "80:80"
     volumes:
       - ./web_app/static_root:/code/static_root
+      - ./web_app/static:/code/static
       - ./web_app/media:/code/media
     depends_on:
       - web
