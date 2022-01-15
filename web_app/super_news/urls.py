@@ -26,6 +26,9 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('admin/', admin.site.urls),
 
+    # grappelli URLS
+    path('grappelli/', include('grappelli.urls'))
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
