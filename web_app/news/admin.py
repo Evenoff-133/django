@@ -2,7 +2,7 @@ from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
 from django.utils.html import format_html
 from threading import Thread
-from .models import Article, Author, Category, Newsletter, Comment, Tag
+from .models import Article, Category, Newsletter, Comment, Tag
 from news.crawlers import bbc_crawler
 
 
@@ -63,26 +63,7 @@ class CategoryAdmin(admin.ModelAdmin):
         return object.article_set.all().count()
 
 
-class AuthorArticleInline(admin.TabularInline):
-    model = Article
-    exclude = ('content', 'short_description')
-
-
-class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'avatar')
-    search_fields = ('name',)
-    inlines = (AuthorArticleInline, )
-    actions = (get_fresh_news, )
-
-    def ava(self, object):
-        return format_html(
-            '<img src="{}" style="max-width:80px" />',
-            object.avatar.url
-        )
-
-
 admin.site.register(Article, ArticleAdmin)
-admin.site.register(Author, AuthorAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Newsletter)
 admin.site.register(Comment)

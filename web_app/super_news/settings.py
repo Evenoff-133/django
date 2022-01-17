@@ -34,6 +34,7 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,6 +45,11 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_summernote',
     'news.apps.NewsConfig',
+    'authors',
+    'userena',
+    'guardian',
+    'easy_thumbnails',
+
 ]
 
 MIDDLEWARE = [
@@ -76,8 +82,29 @@ TEMPLATES = [
     },
 ]
 
+SITE_ID = 1
+
 WSGI_APPLICATION = 'super_news.wsgi.application'
 
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mattivan777@gmail.com'
+EMAIL_HOST_PASSWORD = 'qwezxc123wer'
+
+ANONYMOUS_USER_NAME = 'AnonymousAuthor'
+
+AUTH_PROFILE_MODULE = 'authors.Author'
+
+USERENA_SIGNIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
