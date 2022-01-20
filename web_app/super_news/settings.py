@@ -106,6 +106,10 @@ USERENA_SIGNIN_REDIRECT_URL = '/accounts/%(username)s/'
 LOGIN_URL = '/accounts/signin/'
 LOGOUT_URL = '/accounts/signout/'
 
+USERENA_DISABLE_PROFILE_LIST = True
+
+USERENA_PROFILE_DETAIL_TEMPLATE= 'userena/profile_detail.html'
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
