@@ -26,7 +26,7 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('admin/', admin.site.urls),
 
-    path('accounts/', include('userena.urls')),
+    path('accounts/', include('authors.urls')),
 
     # grappelli URLS
     path('grappelli/', include('grappelli.urls'))

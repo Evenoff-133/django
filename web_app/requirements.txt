@@ -11,6 +11,8 @@ cssselect==1.1.0
 Django==3.2.9
 django-debug-toolbar==3.2.2
 django-summernote==0.8.20.0
+django-grappelli
+django-userena-ce==6.0.1
 fake-useragent==0.1.11
 idna==3.3
 importlib-metadata==4.8.2
@@ -46,5 +48,3 @@ wincertstore==0.2
 wrapt==1.12.1
 zipp==3.6.0
 gunicorn
-django-grappelli
-django-userena-ce

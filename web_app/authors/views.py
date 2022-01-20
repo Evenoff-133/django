@@ -1,3 +1,18 @@
 from django.shortcuts import render
+from userena.views import signin, signup
+from django.http import HttpResponse
 
-# Create your views here.
+from .models import Author
+
+
+def author_profile_detail(request,  **kwargs):
+    user = Author.objects.get(user__username=kwargs.get('username'))
+    context = {'user': user}
+    return render(request, 'authors/index.html', context)
+
+
+def custom_signin(request, *args, **kwargs):
+    if request.POST:
+        return signin(request, *args, **kwargs)
+    else:
+        return HttpResponse(status=404)
