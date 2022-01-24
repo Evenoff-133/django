@@ -4,11 +4,11 @@ from django.urls import re_path, reverse_lazy
 from userena import settings as userena_settings
 from userena import views as userena_views
 
-from .views import author_profile_detail, custom_signin
+from .views import author_profile_detail, custom_signin, custom_signup
 
 urlpatterns = [
     # Signup, signin and signout
-    re_path(r"^signup/$", userena_views.signup, name="userena_signup"),
+    re_path(r"^signup/$", custom_signup, name="userena_signup"),
     re_path(r"^signin/$", custom_signin, name="userena_signin"),
     re_path(r"^signout/$", userena_views.SignoutView.as_view(), name="userena_signout"),
     # Reset password

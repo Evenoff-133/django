@@ -31,7 +31,8 @@
         <!-- form itself end -->
 
         <!-- form itself end-->
-        <form id="test-form2" class="white-popup-block mfp-hide">
+        <form id="test-form2" class="white-popup-block mfp-hide" action="{% url 'userena_signup' %}" method="post">
+            {% csrf_token %}
             <div class="popup_box ">
                 <div class="popup_inner">
                     <div class="logo text-center">
@@ -43,13 +44,16 @@
                     <form action="#">
                         <div class="row">
                             <div class="col-xl-12 col-md-12">
-                                <input type="email" placeholder="Enter email">
+                                <input type="text" placeholder="Enter username" name="username">
                             </div>
                             <div class="col-xl-12 col-md-12">
-                                <input type="password" placeholder="Password">
+                                <input type="text" placeholder="Enter email" name="email">
                             </div>
                             <div class="col-xl-12 col-md-12">
-                                <input type="Password" placeholder="Confirm password">
+                                <input type="password" placeholder="Create password" name="password1">
+                            </div>
+                            <div class="col-xl-12 col-md-12">
+                                <input type="Password" placeholder="Repeat password"  name="password2">
                             </div>
                             <div class="col-xl-12">
                                 <button type="submit" class="boxed_btn_green">Sign Up</button>

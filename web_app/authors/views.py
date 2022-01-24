@@ -16,3 +16,10 @@ def custom_signin(request, *args, **kwargs):
         return signin(request, *args, **kwargs)
     else:
         return HttpResponse(status=404)
+
+
+def custom_signup(request, *args, **kwargs):
+    if request.POST:
+        return signup(request, *args, **kwargs)
+    else:
+        return HttpResponse(status=404)

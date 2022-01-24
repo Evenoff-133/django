@@ -250,7 +250,9 @@
                                 {% for article in user.articles.all %}
 								<tr>
 									<td><input type="checkbox"/></td>
-									<td>{{ article.name}}</td>
+									<td><a href="{% url 'article' article.slug %}">
+                                        <h2>{{ article.name }}</h2></a>
+                                    </td>
 									<td><a href="#" title="title">Sit amet</a></td>
 									<td>Consectetur adipiscing</td>
 									<td>Donec tortor diam</td>
