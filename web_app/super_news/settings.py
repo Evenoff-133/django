@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'userena',
     'guardian',
     'easy_thumbnails',
+    'django_elasticsearch_dsl'
 
 ]
 
@@ -107,6 +108,8 @@ LOGIN_URL = '/accounts/signin/'
 LOGOUT_URL = '/accounts/signout/'
 
 USERENA_DISABLE_PROFILE_LIST = True
+SERENA_SIGNIN_AFTER_SIGNUP = True
+USERENA_ACTIVATION_REQUIRED = True
 
 USERENA_PROFILE_DETAIL_TEMPLATE= 'userena/profile_detail.html'
 
@@ -124,6 +127,11 @@ DATABASES = {
     }
 }
 
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'elasticsearch:9200'
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

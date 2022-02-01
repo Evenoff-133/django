@@ -1,0 +1,9 @@
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+
+discovery.type: single-node
+
+xpack.security.enabled: false
+xpack.watcher.enabled: false
+xpack.monitoring.collection.enabled: false
+xpack.license.self_generated.type: trial

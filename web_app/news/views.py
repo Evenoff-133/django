@@ -1,10 +1,20 @@
 from django.core.exceptions import ObjectDoesNotExist
+
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import FormMixin
+
 from django.urls import reverse
+from django.shortcuts import redirect
+
 from django.views.generic.detail import SingleObjectMixin
 from .models import Article, Category, Comment
 from .forms import CommentForm
+
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+
+from django.core.paginator import Paginator
+
+from .documents import ArticleDocument
 
 
 class IndexView(TemplateView):
@@ -96,6 +106,44 @@ class AboutView(TemplateView):
 
 class SearchView(TemplateView):
     template_name = 'news/search.html'
+    per_page = 3
+
+    def get(self, request, *args, **kwargs):
+        self.query_text = self.request.GET.get('q')
+        self.current_page = self.request.GET.get('page')
+
+        if not self.current_page:
+            self.current_page = 1
+        else:
+            self.current_page = int(self.current_page)
+
+        self.results = ArticleDocument.search().query("match", content=self.query_text).to_queryset()
+
+        self.results_count = self.results.count()
+        max_page = self.results_count // self.per_page
+
+        if self.current_page > max_page:
+            url = reverse('search')
+            url += f'?q={self.query_text}&page={max_page}'
+            return redirect(url)
+
+        context = self.get_context_data(**kwargs)
+
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+
+        context = {
+            'query': self.query_text,
+            'search_articles': self.results,
+            'current_page': self.current_page
+        }
+
+        paginator = Paginator(self.results, self.per_page)
+        context['paginator'] = paginator
+        context['page_obj'] = paginator.page(self.current_page)
+
+        return context
 
 
 class RobotsView(TemplateView):
