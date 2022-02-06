@@ -10,8 +10,6 @@ from django.views.generic.detail import SingleObjectMixin
 from .models import Article, Category, Comment
 from .forms import CommentForm
 
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-
 from django.core.paginator import Paginator
 
 from .documents import ArticleDocument
@@ -106,7 +104,7 @@ class AboutView(TemplateView):
 
 class SearchView(TemplateView):
     template_name = 'news/search.html'
-    per_page = 3
+    per_page = 5
 
     def get(self, request, *args, **kwargs):
         self.query_text = self.request.GET.get('q')
@@ -117,7 +115,8 @@ class SearchView(TemplateView):
         else:
             self.current_page = int(self.current_page)
 
-        self.results = ArticleDocument.search().query("match", content=self.query_text).to_queryset()
+        self.results = ArticleDocument.search().query(
+            "match", content=self.query_text).to_queryset()
 
         self.results_count = self.results.count()
         max_page = self.results_count // self.per_page
